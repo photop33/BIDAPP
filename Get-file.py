@@ -6,9 +6,9 @@ chromedriver_path = 'https://github.com/photop33/BIDAPP/chromedriver.exe'  # Cha
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument(f"executable_path={chromedriver_path}")
 driver = webdriver.Chrome(options=chrome_options)
-username='316594688'
-password='620620'
-XX='Liorlior12'
+username=''
+password=''
+XX=''
 driver.get("https://digital.isracard.co.il/personalarea/Login/?returnUrl=http://digital.isracard.co.il/personalarea/dashboard/")
 driver.find_element("xpath", '//*[@id="flip"]').click()
 driver.find_element("xpath", '//*[@id="otpLoginId_ID"]').send_keys(username)
