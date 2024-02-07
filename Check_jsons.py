@@ -1,10 +1,11 @@
 import json
 import codecs
+import os
 
-# List of all JSON files to check against
-json_files = ['home.json', 'leisure.json', 'transportation.json', 'insurance.json', 'Pharm.json', 'Business.json', 'mortgage.json', 'Other.json']
+# Define the list of JSON files with their full paths
+path = r'C:\Users\LS\PycharmProjects\pythonProject5\Json list'
+json_files = [os.path.join(path, 'home.json'), os.path.join(path, 'leisure.json'), os.path.join(path, 'transportation.json'), os.path.join(path, 'insurance.json'), os.path.join(path, 'Pharm.json'), os.path.join(path, 'Business.json'), os.path.join(path, 'mortgage.json'), os.path.join(path, 'Other.json')]
 
-# Load data from all JSON files
 data = {}
 for file_name in json_files:
     with open(file_name, 'rb') as file:
@@ -14,6 +15,7 @@ for file_name in json_files:
             # Try reading the file with a different encoding
             with codecs.open(file_name, 'r', encoding='cp1255') as alt_file:
                 data[file_name] = json.load(alt_file)
+
 
 # Create a set of existing descriptions for faster lookup
 existing_descriptions = set()
@@ -36,12 +38,12 @@ for entry in output_data:
             for expense in file_data["expenses"]:
                 if expense["Description"].lower() == description:
                     # Print the existing value
-                    print("Existing value for", description, "in", file_name, ":", expense["Amount"])
+                    print("Existing value for", description, "in", os.path.basename(file_name), ":", expense["Amount"])  # Modified line
                     # Check if Flag already exists, if not add it
                     if "Flag" not in entry:
                         entry["Flag"] = []
                     # Add the flag to the entry in output.json
-                    entry["Flag"].append(file_name.split('.')[0])
+                    entry["Flag"].append(os.path.basename(file_name).split('.')[0])  # Modified line
                     break
     else:
         # If no match found, mark Flag as "None"
