@@ -1,4 +1,5 @@
 import json
+import codecs
 
 # List of all JSON files to check against
 json_files = ['home.json', 'leisure.json', 'transportation.json', 'insurance.json', 'Pharm.json', 'Business.json', 'mortgage.json', 'Other.json']
@@ -6,13 +7,19 @@ json_files = ['home.json', 'leisure.json', 'transportation.json', 'insurance.jso
 # Load data from all JSON files
 data = {}
 for file_name in json_files:
-    with open(file_name, 'r', encoding='ISO-8859-1') as file:
-        data[file_name] = json.load(file)
+    with open(file_name, 'rb') as file:
+        try:
+            data[file_name] = json.load(file)
+        except UnicodeDecodeError:
+            # Try reading the file with a different encoding
+            with codecs.open(file_name, 'r', encoding='cp1255') as alt_file:
+                data[file_name] = json.load(alt_file)
 
 # Create a set of existing descriptions for faster lookup
 existing_descriptions = set()
 for file_name, file_data in data.items():
-    existing_descriptions.update(expense["Description"] for expense in file_data["expenses"])
+    for expense in file_data["expenses"]:
+        existing_descriptions.add(expense["Description"].lower())
 
 # Load data from output.json
 with open('output.json', 'r', encoding='utf-8') as output_file:
@@ -20,13 +27,14 @@ with open('output.json', 'r', encoding='utf-8') as output_file:
 
 # Iterate through each entry in output.json
 for entry in output_data:
-    description = entry["Description"]
+    description = entry["Description"].lower()
+
     # Check if the description exists in any of the JSON files
     if description in existing_descriptions:
         # Iterate through each JSON file
         for file_name, file_data in data.items():
             for expense in file_data["expenses"]:
-                if expense["Description"] == description:
+                if expense["Description"].lower() == description:
                     # Print the existing value
                     print("Existing value for", description, "in", file_name, ":", expense["Amount"])
                     # Check if Flag already exists, if not add it
@@ -38,6 +46,12 @@ for entry in output_data:
     else:
         # If no match found, mark Flag as "None"
         entry["Flag"] = "None"
+
+# Capitalize the first letter of the Description if an exact match is found
+for entry in output_data:
+    description = entry["Description"].lower()
+    if entry["Flag"] != "None" and description in existing_descriptions:
+        entry["Description"] = description.capitalize()
 
 # Write the updated data back to output.json
 with open('output2.json', 'w', encoding='utf-8') as output_file:
