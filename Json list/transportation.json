@@ -1,0 +1,16 @@
+{
+  "expenses": [
+    {
+        "Date": 1704412800000,
+        "Description": "Hot",
+        "Amount": 120,
+        "Flag": "home"
+    },
+    {
+        "Date": 1704412800000,
+        "Description": "wolt",
+        "Amount": 19,
+        "Flag": "home"
+    }
+	]
+}
