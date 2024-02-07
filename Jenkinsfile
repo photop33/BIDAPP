@@ -10,12 +10,33 @@ pipeline {
                 git 'https://github.com/photop33/BIDAPP.git'
             }
         }
-        stage('Deploy Flask') {
+        stage('Export Data') {
             steps {
                 script {
-                    bat script: 'helm install ldap ./my-bitnami', returnStatus: true
+                    bat script: 'start ExportXL.py', returnStatus: true
                 }
             }
         }
-	}
+	stage('Orgine XL') {
+            steps {
+                script {
+                    bat script: 'start organize_XL.py', returnStatus: true
+                }
+            }
+        }
+	stage('convert Json') {
+            steps {
+                script {
+                    bat script: 'start Convert_json.py', returnStatus: true
+                }
+            }
+        }
+	stage('check Json') {
+            steps {
+                script {
+                    bat script: 'start Check_json.py', returnStatus: true
+                }
+            }
+        }
+    }
 }
