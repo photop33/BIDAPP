@@ -4,7 +4,7 @@ pipeline {
         stage('Export Data') {
             steps {
                 script {
-                    sh 'python ExportXL.py'
+                    bat 'python ExportXL.py'
                 }
             }
         }
