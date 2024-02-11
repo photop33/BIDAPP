@@ -9,6 +9,7 @@ driver = webdriver.Chrome(options=chrome_options)
 username=''
 password=''
 XX=''
+print ("Test")
 driver.get("https://digital.isracard.co.il/personalarea/Login/?returnUrl=http://digital.isracard.co.il/personalarea/dashboard/")
 driver.find_element("xpath", '//*[@id="flip"]').click()
 driver.find_element("xpath", '//*[@id="otpLoginId_ID"]').send_keys(username)
