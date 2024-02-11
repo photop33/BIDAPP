@@ -13,28 +13,28 @@ pipeline {
         stage('Export Data') {
             steps {
                 script {
-                    bat script: 'start ExportXL.py', returnStatus: true
+                    bat script: 'python ExportXL.py', returnStatus: true
                 }
             }
         }
 	stage('Orgine XL') {
             steps {
                 script {
-                    bat script: 'start organize_XL.py', returnStatus: true
+                    bat script: 'python organize_XL.py', returnStatus: true
                 }
             }
         }
 	stage('convert Json') {
             steps {
                 script {
-                    bat script: 'start Convert_json.py', returnStatus: true
+                    bat script: 'python Convert_json.py', returnStatus: true
                 }
             }
         }
 	stage('check Json') {
             steps {
                 script {
-                    bat script: 'start Check_json.py', returnStatus: true
+                    bat script: 'python Check_json.py', returnStatus: true
                 }
             }
         }
