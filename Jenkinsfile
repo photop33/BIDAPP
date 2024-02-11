@@ -4,7 +4,7 @@ pipeline {
         stage('Export Data') {
             steps {
                 script {
-                    bat 'echo hello'
+                    sh 'echo hello'
                 }
             }
         }
