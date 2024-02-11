@@ -13,7 +13,7 @@ pipeline {
         stage('Export Data') {
             steps {
                 script {
-                    bat 'python ExportXL.py'
+                    bat 'python test.py'
                 }
             }
         }
