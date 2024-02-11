@@ -12,7 +12,7 @@ pipeline {
         stage('Export Data') {
             steps {
                 script {
-                    bat 'python test.py'
+                    bat 'start test.py'
                 }
             }
         }
