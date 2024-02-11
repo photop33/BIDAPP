@@ -7,7 +7,6 @@ pipeline {
                     properties([pipelineTriggers([pollSCM('0 0 * * *')])])
                     properties([buildDiscarder(logRotator(daysToKeepStr: '5', numToKeepStr: '20')),])
                 }
-                git 'https://github.com/photop33/BIDAPP.git'
             }
         }
         stage('Export Data') {
